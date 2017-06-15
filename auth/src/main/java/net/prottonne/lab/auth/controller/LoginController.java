@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST,
+    @RequestMapping(value = "lab/login", method = RequestMethod.POST,
             produces = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseLogin auth(@RequestBody RequestLogin requestLogin) {
         if ("user@email.net".equals(requestLogin.getEmail())
