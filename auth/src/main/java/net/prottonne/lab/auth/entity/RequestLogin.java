@@ -34,7 +34,7 @@ public class RequestLogin {
 
     @Override
     public String toString() {
-        return "RequestLogin{" + "email=" + email + ", password=" + password + '}';
+        return "RequestLogin{" + "email=" + email +'}';
     }
 
 }
