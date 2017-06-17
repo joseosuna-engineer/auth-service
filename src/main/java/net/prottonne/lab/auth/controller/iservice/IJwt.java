@@ -14,6 +14,4 @@ public interface IJwt {
 
     public ResponseLogin auth(RequestLogin requestLogin);
 
-    public void validateJwtToken(String token);
-
 }
