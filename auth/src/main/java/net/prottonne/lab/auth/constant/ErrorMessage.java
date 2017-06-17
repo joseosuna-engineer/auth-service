@@ -1,18 +1,19 @@
 /*
  * Copyright 2017 Prottonne
  */
-package net.prottonne.lab.auth.controller;
+package net.prottonne.lab.auth.constant;
 
 /**
  *
  * @author Jose Osuna
  */
-public enum EnviromentConstant {
-    JWT_SECRET("WWW_1232");
+public enum ErrorMessage {
+    CANNOT_BE_PROCESSED("cannot be processed"),
+    ACCESS_DENIED("access denied");
 
     private final String value;
 
-    private EnviromentConstant(String value) {
+    private ErrorMessage(String value) {
         this.value = value;
     }
 
