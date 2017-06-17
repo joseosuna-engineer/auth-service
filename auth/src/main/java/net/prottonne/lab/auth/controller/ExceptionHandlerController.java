@@ -20,7 +20,7 @@ public class ExceptionHandlerController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public String requestHandlingNoHandlerFound() {
+    public String globalHander() {
         return ErrorMessage.CANNOT_BE_PROCESSED.getValue();
     }
 
