@@ -6,6 +6,7 @@ package net.prottonne.lab.auth.controller;
 import net.prottonne.lab.auth.controller.iservice.IJwt;
 import net.prottonne.lab.auth.entity.RequestLogin;
 import net.prottonne.lab.auth.entity.ResponseLogin;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LoginController {
 
-    private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private IJwt jwtService;

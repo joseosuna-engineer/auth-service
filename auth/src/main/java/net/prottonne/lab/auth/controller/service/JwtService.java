@@ -5,18 +5,19 @@ package net.prottonne.lab.auth.controller.service;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.SignatureException;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import net.prottonne.lab.auth.controller.LoginController;
+import net.prottonne.lab.auth.controller.EnviromentConstant;
+import net.prottonne.lab.auth.controller.ErrorMessage;
 import net.prottonne.lab.auth.controller.iservice.IJwt;
 import net.prottonne.lab.auth.entity.RequestLogin;
 import net.prottonne.lab.auth.entity.ResponseLogin;
+import net.prottonne.lab.auth.exception.TechnicalException;
+import net.prottonne.lab.auth.util.StringUtil;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,17 +27,29 @@ import org.springframework.stereotype.Service;
 @Service
 public class JwtService implements IJwt {
 
+    private final org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private final Long LAP_TIME_IN_MINUTES = 30L;
     private final String CLAIM_NAME = "data";
 
     @Override
     public ResponseLogin auth(RequestLogin requestLogin) {
-        if ("user@email.net".equals(requestLogin.getEmail())
-                && "1234".equals(requestLogin.getPassword())) {
-            return new ResponseLogin(generateJwtToken(requestLogin));
+        try {
+            if ("user@email.net".equals(requestLogin.getEmail())
+                    && "1234".equals(requestLogin.getPassword())) {
+                return new ResponseLogin(generateJwtToken(requestLogin));
+            }
+        } catch (Exception e) {
+
+            logger.error("{} {} {}", ErrorMessage.CANNOT_BE_PROCESSED.getValue(),
+                    requestLogin, e);
+            throw new TechnicalException(ErrorMessage.CANNOT_BE_PROCESSED.getValue());
+
         }
 
-        throw new RuntimeException("access denied");
+        logger.error("{} {}", ErrorMessage.ACCESS_DENIED.getValue(),
+                requestLogin);
+        throw new TechnicalException(ErrorMessage.CANNOT_BE_PROCESSED.getValue());
     }
 
     private String generateJwtToken(RequestLogin requestLogin) {
@@ -65,31 +78,30 @@ public class JwtService implements IJwt {
     }
 
     private String getIdUser(RequestLogin requestLogin) {
-        return "8675A79C-6D07-4293-994B-E5510945CB66";
-    }
-
-    private boolean validateJwtToken(String token) {
-        try {
-
-            Jwts.parser()
-                    .setSigningKey("110A7B279F5D".getBytes("UTF-8"))
-                    .parseClaimsJws(token);
-
-            return true;
-
-        } catch (SignatureException | UnsupportedEncodingException e) {
-            Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, e);
-
-            return false;
-        }
+        return requestLogin.getEmail();
     }
 
     private byte[] getSecret() {
+
+        return StringUtil.getEnv(
+                EnviromentConstant.JWT_SECRET.getValue()
+        ).getBytes(StandardCharsets.UTF_8);
+
+    }
+
+    @Override
+    public void validateJwtToken(String token) {
         try {
-            return "110A7B279F5D".getBytes("UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(JwtService.class.getName()).log(Level.SEVERE, null, ex);
-            throw new RuntimeException(ex);
+
+            Jwts
+                    .parser()
+                    .setSigningKey(getSecret())
+                    .parseClaimsJws(token);
+
+        } catch (Exception e) {
+            logger.error("{} {}", ErrorMessage.ACCESS_DENIED.getValue(),
+                    e);
+            throw new TechnicalException(ErrorMessage.CANNOT_BE_PROCESSED.getValue());
         }
     }
 
