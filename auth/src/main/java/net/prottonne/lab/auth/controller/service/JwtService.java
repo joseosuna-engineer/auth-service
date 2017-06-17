@@ -60,7 +60,7 @@ public class JwtService implements IJwt {
                 .setIssuedAt(getIssueDate(now))
                 .setExpiration(getExpirationDate(now))
                 .claim(CLAIM_NAME, getIdUser(requestLogin))
-                .signWith(SignatureAlgorithm.HS256, getSecret())
+                .signWith(SignatureAlgorithm.HS512, getSecret())
                 .compact();
 
     }
