@@ -9,6 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <jetty.version>9.4.6.v20170531</jetty.version>
     </properties>
 
     <parent>
@@ -21,16 +22,26 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <!-- exclude tomcat server -->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+        
+        <!-- jetty -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+            <artifactId>spring-boot-starter-jetty</artifactId>
+        </dependency>        
+     
+        <!-- common libraries -->
         <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <scope>test</scope>
+            <groupId>net.prottonne.lab</groupId>
+            <artifactId>common-utils</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         
         <!-- JJWT -->
@@ -38,13 +49,6 @@
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>0.7.0</version>
-        </dependency>
-        
-        <!-- common libraries -->
-        <dependency>
-            <groupId>net.prottonne.lab</groupId>
-            <artifactId>common-utils</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         
     </dependencies>
