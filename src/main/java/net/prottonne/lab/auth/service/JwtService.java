@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 Prottonne
  */
-package net.prottonne.lab.auth.controller.service;
+package net.prottonne.lab.auth.service;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -10,7 +10,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.UUID;
 import net.prottonne.lab.auth.constant.ErrorMessage;
-import net.prottonne.lab.auth.controller.iservice.IJwt;
+import net.prottonne.lab.auth.iservice.IJwt;
 import net.prottonne.lab.auth.entity.RequestLogin;
 import net.prottonne.lab.auth.entity.ResponseLogin;
 import net.prottonne.lab.common.util.auth.JwtUtil;
