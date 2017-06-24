@@ -1,7 +1,7 @@
 /*
  * Copyright 2017 Prottonne
  */
-package net.prottonne.lab.auth.controller.iservice;
+package net.prottonne.lab.auth.iservice;
 
 import net.prottonne.lab.auth.entity.RequestLogin;
 import net.prottonne.lab.auth.entity.ResponseLogin;
