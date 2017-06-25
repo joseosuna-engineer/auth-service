@@ -3,7 +3,7 @@
  */
 package net.prottonne.lab.auth.controller;
 
-import net.prottonne.lab.auth.constant.ErrorMessage;
+import net.prottonne.lab.common.util.exception.ErrorMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
