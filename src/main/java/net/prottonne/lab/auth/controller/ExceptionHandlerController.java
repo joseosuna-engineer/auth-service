@@ -3,7 +3,10 @@
  */
 package net.prottonne.lab.auth.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import net.prottonne.lab.common.util.exception.ErrorMessage;
+import net.prottonne.lab.common.util.exception.RespondMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -24,9 +27,12 @@ public class ExceptionHandlerController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public String globalHander(Exception ex) {
+    public RespondMessage globalHander(HttpServletRequest request,
+            HttpServletResponse response, Exception ex) {
         logger.error("{}", ex);
-        return ErrorMessage.CANNOT_BE_PROCESSED.getValue();
+        return new RespondMessage(
+                "Handler " + ErrorMessage.CANNOT_BE_PROCESSED.getValue()
+        );
     }
 
 }
