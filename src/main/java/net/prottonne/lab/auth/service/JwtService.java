@@ -28,7 +28,7 @@ public class JwtService implements IJwt {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final Long LAP_TIME_IN_MINUTES = 30L;
+    private final Long LAP_TIME_IN_MINUTES = 5L;
     private final String CLAIM_NAME = "data";
 
     @Override
