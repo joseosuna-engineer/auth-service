@@ -13,6 +13,7 @@ public class User {
     private String firstName;
     private String lastName;
     private Boolean auth;
+    private String email;
 
     public User() {
         super();
@@ -50,9 +51,17 @@ public class User {
         this.auth = auth;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", auth=" + auth + '}';
+        return "User{" + "id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", auth=" + auth + ", email=" + email + '}';
     }
 
 }
