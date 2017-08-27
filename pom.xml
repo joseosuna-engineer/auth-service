@@ -61,6 +61,12 @@
             <artifactId>spring-cloud-starter-eureka</artifactId>
         </dependency>
         
+        <!-- Dynamic Type Properties -->
+        <dependency>
+            <groupId>com.netflix.archaius</groupId>
+            <artifactId>archaius-core</artifactId>
+        </dependency>
+        
     </dependencies>
     
     <dependencyManagement>
