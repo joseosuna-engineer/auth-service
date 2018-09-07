@@ -3,8 +3,6 @@
  */
 package net.prottonne.lab.auth.service;
 
-import com.netflix.config.DynamicPropertyFactory;
-import com.netflix.config.DynamicStringProperty;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.net.URI;
@@ -23,8 +21,10 @@ import net.prottonne.lab.common.util.exception.TechnicalException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -33,6 +33,7 @@ import org.springframework.web.client.RestTemplate;
  *
  * @author Jose Osuna
  */
+@RefreshScope // Dynamic refresh properties
 @Service
 public class JwtService implements IJwt {
 
@@ -40,13 +41,15 @@ public class JwtService implements IJwt {
 
     private final Long LAP_TIME_IN_MINUTES = 5L;
     private final String CLAIM_NAME = "user";
-    private final String PROFILE_SERVICE_ID_PROPERTY = "profile.serviceId";
 
     @Autowired
     private LoadBalancerClient loadBalancer;
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Value("${profile.serviceId}")
+    private String profileServiceId;
 
     @Override
     public ResponseLogin auth(RequestLogin requestLogin) {
@@ -96,11 +99,6 @@ public class JwtService implements IJwt {
     private User getUser(RequestLogin requestLogin) {
 
         logger.info("requestLogin {}", requestLogin);
-
-        DynamicStringProperty profileServiceIdProp
-                = DynamicPropertyFactory.getInstance().getStringProperty(PROFILE_SERVICE_ID_PROPERTY, "");
-
-        final String profileServiceId = profileServiceIdProp.get();
 
         logger.info("profileServiceId={}", profileServiceId);
 
