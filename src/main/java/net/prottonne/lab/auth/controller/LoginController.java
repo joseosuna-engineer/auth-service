@@ -3,7 +3,7 @@
  */
 package net.prottonne.lab.auth.controller;
 
-import net.prottonne.lab.auth.controller.iservice.IJwt;
+import net.prottonne.lab.auth.iservice.IJwt;
 import net.prottonne.lab.auth.entity.RequestLogin;
 import net.prottonne.lab.auth.entity.ResponseLogin;
 import org.slf4j.Logger;
